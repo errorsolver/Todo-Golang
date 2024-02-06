@@ -1,0 +1,370 @@
+{
+	"info": {
+		"_postman_id": "eca7bb42-5f2c-4c53-8053-685fc985c3d2",
+		"name": "Todo-Golang Cloud",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31517562"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "createUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": {{name}},\r\n    \"pass\": {{pass}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/user/register",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": {{name}},\r\n    \"pass\": {{pass}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/login",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllUser",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{path}}/user/all",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"user",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUserByID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{path}}/user/{{userID}}",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"user",
+								"{{userID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateUser",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": {{nameUpdate}},\r\n    \"pass\": {{passUpdate}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/user",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteUser",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{path}}/user",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": {{name}},\r\n    \"pass\": {{pass}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/logout",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Todo",
+			"item": [
+				{
+					"name": "createTodo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"todo\": {{todo}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/todo",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"todo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllTodo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{path}}/todo/all",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"todo",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getTodoByUserID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{path}}/todo",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"todo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateTodo",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"todo\": {{todo}},\r\n    \"isDone\": {{isDone}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/todo",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"todo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteTodo",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/todo/{{todoID}}",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"todo",
+								"{{todoID}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// let varPass = pm.collectionVariables.get(\"pass\");",
+					"// let varName = pm.collectionVariables.get(\"name\");",
+					"",
+					"// for(i=0; i<5;I++){",
+					"//     pm.collectionVariables.set(\"variableName\", myVar);",
+					"// }"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "path",
+			"value": "http://8.219.130.79:80",
+			"type": "string"
+		},
+		{
+			"key": "userID",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "todoID",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "name",
+			"value": "\"dummyNama_1\"",
+			"type": "string"
+		},
+		{
+			"key": "nameUpdate",
+			"value": "\"dummyNamaUpdate_1\"",
+			"type": "string"
+		},
+		{
+			"key": "pass",
+			"value": "\"dummyPass_1\"",
+			"type": "string"
+		},
+		{
+			"key": "passUpdate",
+			"value": "\"dummyPassUpdate_1\"",
+			"type": "string"
+		},
+		{
+			"key": "todo",
+			"value": "\"read a book_1\"",
+			"type": "string"
+		},
+		{
+			"key": "isDone",
+			"value": "true",
+			"type": "string"
+		}
+	]
+}
