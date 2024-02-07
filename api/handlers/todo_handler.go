@@ -99,7 +99,7 @@ func CreateTodo(c *gin.Context) {
 		})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{
+	c.JSON(http.StatusCreated, gin.H{
 		"success": true,
 		"code":    http.StatusCreated,
 		"message": "Create todo success",
