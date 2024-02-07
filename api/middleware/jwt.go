@@ -44,12 +44,12 @@ func VerifJWT() gin.HandlerFunc {
 		_, err := GetJWTData(c)
 		if err != nil {
 			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
-				"location": "Get Cookie",
-				"message":  err.Error(),
+				"success": false,
+				"code":    http.StatusBadRequest,
+				"error":   err.Error(),
 			})
 			return
 		}
-
 		c.Next()
 	}
 }
@@ -70,7 +70,7 @@ func GetJWTData(c *gin.Context) (jwt.MapClaims, error) {
 func GetCookie(c *gin.Context) (string, error) {
 	tokenString, err := c.Cookie(os.Getenv("COOKIETITLE"))
 	if err != nil {
-		return "", fmt.Errorf("you are not logged in yet")
+		return "", fmt.Errorf("You are not logged in yet")
 	}
 	return tokenString, nil
 }
@@ -79,7 +79,7 @@ func ParseJWT(tokenString string) (jwt.MapClaims, error) {
 	token, err := jwt.Parse(tokenString, func(t *jwt.Token) (interface{}, error) {
 		_, ok := t.Method.(*jwt.SigningMethodHMAC)
 		if !ok {
-			return nil, fmt.Errorf("unexpected signing method: %v", t.Header["alg"])
+			return nil, fmt.Errorf("Unexpected signing method: %v", t.Header["alg"])
 		}
 		return []byte(os.Getenv("SIGNINGKEY")), nil
 	})

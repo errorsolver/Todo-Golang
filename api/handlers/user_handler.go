@@ -14,31 +14,49 @@ import (
 func GetAllUsers(c *gin.Context) {
 	users, err := services.GetAllUsers()
 	if err != nil {
-		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": err.Error()})
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
+			"success": false,
+			"code":    http.StatusBadRequest,
+			"error":   err.Error(),
+		})
 		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"message": "GetAllUsers Success",
-		"data":    users})
+		"success": true,
+		"code":    http.StatusOK,
+		"message": "Get all users success",
+		"data":    users,
+	})
 }
 
 func GetUserByID(c *gin.Context) {
 	userId, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": err.Error()})
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
+			"success": false,
+			"code":    http.StatusBadRequest,
+			"error":   err.Error(),
+		})
 		return
 	}
 
 	user, err := services.GetUserByID(userId)
 	if err != nil {
-		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": err.Error()})
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
+			"success": false,
+			"code":    http.StatusBadRequest,
+			"error":   err.Error(),
+		})
 		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"message": "GetUserByID Success",
-		"data":    user})
+		"success": true,
+		"code":    http.StatusOK,
+		"message": "Get user by ID Success",
+		"data":    user,
+	})
 }
 
 func CreateUser(c *gin.Context) {
@@ -46,24 +64,33 @@ func CreateUser(c *gin.Context) {
 	if err := c.BindJSON(&user); err != nil {
 		if err.Error() == "EOF" {
 			c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-				"message": "Make sure you have entered data in the body",
+				"success": false,
+				"code":    http.StatusBadRequest,
+				"error":   "Make sure you have entered data in the body",
 			})
 			return
 		}
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"message": err.Error(),
+			"success": false,
+			"code":    http.StatusBadRequest,
+			"error":   err.Error(),
 		})
 		return
 	}
 
 	if err := services.CreateUser(user); err != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"message": err.Error(),
+			"success": false,
+			"code":    http.StatusBadRequest,
+			"error":   err.Error(),
 		})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{
-		"message": "CreateUser Success",
+	c.JSON(http.StatusCreated, gin.H{
+		"success": true,
+		"code":    http.StatusCreated,
+		"message": "Create user success",
+		"data":    user,
 	})
 }
 
@@ -73,12 +100,16 @@ func UpdateUser(c *gin.Context) {
 	if err := c.BindJSON(&user); err != nil {
 		if err.Error() == "EOF" {
 			c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-				"message": "Make sure you have entered data in the body",
+				"success": false,
+				"code":    http.StatusBadRequest,
+				"error":   "Make sure you have entered data in the body",
 			})
 			return
 		}
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"message": err.Error(),
+			"success": false,
+			"code":    http.StatusBadRequest,
+			"error":   err.Error(),
 		})
 		return
 	}
@@ -86,7 +117,9 @@ func UpdateUser(c *gin.Context) {
 	userID, err := getUserID(c)
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
-			"message": err.Error(),
+			"success": false,
+			"code":    http.StatusBadRequest,
+			"error":   err.Error(),
 		})
 		return
 	}
@@ -94,13 +127,18 @@ func UpdateUser(c *gin.Context) {
 
 	if err := services.UpdateUser(user); err != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"message": err.Error(),
+			"success": false,
+			"code":    http.StatusBadRequest,
+			"error":   err.Error(),
 		})
 		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"message": "UpdateUser Success",
+		"success": true,
+		"code":    http.StatusOK,
+		"message": "Update user success",
+		"data":    user,
 	})
 }
 
@@ -108,18 +146,25 @@ func DeleteUser(c *gin.Context) {
 	id, err := getUserID(c)
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
-			"message": err.Error(),
+			"success": false,
+			"code":    http.StatusBadRequest,
+			"error":   err.Error(),
 		})
 		return
 	}
 
 	if err := services.DeleteUser(id); err != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"message": err.Error(),
+			"success": false,
+			"code":    http.StatusBadRequest,
+			"error":   err.Error(),
 		})
 	}
 	c.JSON(http.StatusOK, gin.H{
-		"message": "DeleteUser Success",
+		"success": true,
+		"code":    http.StatusOK,
+		"message": "Delete user success",
+		"data":    gin.H{},
 	})
 }
 
@@ -129,29 +174,49 @@ func Login(c *gin.Context) {
 	if err := c.BindJSON(&user); err != nil {
 		if err.Error() == "EOF" {
 			c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-				"message": "Make sure you have entered data in the body",
+				"success": false,
+				"code":    http.StatusBadRequest,
+				"error":   "Make sure you have entered data in the body",
 			})
 			return
 		}
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"message": err.Error(),
+			"success": false,
+			"code":    http.StatusBadRequest,
+			"error":   err.Error(),
 		})
 		return
 	}
 
 	token, err := services.GetUserByNamePass(user)
 	if err != nil {
-		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": err.Error()})
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
+			"success": false,
+			"code":    http.StatusBadRequest,
+			"error":   err.Error(),
+		})
+
 		return
 	}
 
 	utils.CreateJWTCookie(c, token)
 
-	c.JSON(http.StatusOK, gin.H{"message": "Login success"})
+	c.JSON(http.StatusOK, gin.H{
+		"success": true,
+		"code":    http.StatusOK,
+		"message": "Login success",
+		"data":    gin.H{},
+	})
 }
 
 func Logout(c *gin.Context) {
 	utils.DeleteJWTCookie(c)
+	c.JSON(http.StatusOK, gin.H{
+		"success": true,
+		"code":    http.StatusOK,
+		"message": "Logout success",
+		"data":    gin.H{},
+	})
 }
 
 func getUserID(c *gin.Context) (uint, error) {
