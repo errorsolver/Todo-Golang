@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -192,7 +193,7 @@ func DeleteTodo(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"success": true,
 		"code":    http.StatusOK,
-		"message": "Delete todo success",
+		"message": fmt.Sprintf("Delete todo ID = %d success", userID),
 		"data":    todo,
 	})
 }

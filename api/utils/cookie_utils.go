@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func CreateJWTCookie(c *gin.Context, token string) {
+func CreateJWTCookie(c *gin.Context, token string) string {
 	c.SetCookie(
 		os.Getenv("COOKIETITLE"), // name string
 		token,                    // value string
@@ -16,6 +16,7 @@ func CreateJWTCookie(c *gin.Context, token string) {
 		false,                    // secure bool
 		true,                     // httpOnly bool
 	)
+	return token
 }
 func DeleteJWTCookie(c *gin.Context) {
 	c.SetCookie(

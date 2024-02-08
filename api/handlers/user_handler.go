@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -163,7 +164,7 @@ func DeleteUser(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"success": true,
 		"code":    http.StatusOK,
-		"message": "Delete user success",
+		"message": fmt.Sprintf("Delete user ID = %d success", id),
 		"data":    gin.H{},
 	})
 }
@@ -199,13 +200,13 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	utils.CreateJWTCookie(c, token)
+	tokenCookie := utils.CreateJWTCookie(c, token)
 
 	c.JSON(http.StatusOK, gin.H{
 		"success": true,
 		"code":    http.StatusOK,
 		"message": "Login success",
-		"data":    gin.H{},
+		"data":    tokenCookie,
 	})
 }
 
