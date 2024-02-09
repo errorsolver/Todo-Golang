@@ -2,6 +2,12 @@
 
 This is Golang API to create todo list for user. This app use Gin and Gorm framework.
 
+## Detail API
+
+Base URL = 8.219.130.79
+Server = AlibabaCloud
+Database Service = Neon
+
 ## Table Of Contents
 
 1. [User Endpoint](#user-endpoint)  
