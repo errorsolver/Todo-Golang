@@ -135,6 +135,15 @@ func UpdateTodo(c *gin.Context) {
 		})
 		return
 	}
+	// todoID???
+	if todo.ID == 0 {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
+			"success": false,
+			"code":    http.StatusBadRequest,
+			"error":   "PLease input todo ID",
+		})
+		return
+	}
 
 	userID, err := getUserID(c)
 	if err != nil {
