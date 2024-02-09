@@ -7,6 +7,15 @@ import (
 )
 
 func CreateJWTCookie(c *gin.Context, token string) string {
+	// Set cookie in header
+	// authorizationHeader := r.Header.Get("Authorization")
+	//     if !strings.Contains(authorizationHeader, "Bearer") {
+	//         http.Error(w, "Invalid token", http.StatusBadRequest)
+	//         return
+	//     }
+
+	//     tokenString := strings.Replace(authorizationHeader, "Bearer ", "", -1)
+
 	c.SetCookie(
 		os.Getenv("COOKIETITLE"), // name string
 		token,                    // value string

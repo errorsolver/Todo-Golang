@@ -7,13 +7,20 @@ import (
 	"github.com/joho/godotenv"
 )
 
-func main() {
+func initializeApp() error {
 	err := godotenv.Load()
 	if err != nil {
-		panic("ERROR fail load env")
+		return err
 	}
 	database.InitDB()
+	return nil
+}
 
+func main() {
+	err := initializeApp()
+	if err != nil {
+		panic("ERROR failed to initialize app: " + err.Error())
+	}
 	r := gin.Default()
 
 	routes.UserRoutes(r)

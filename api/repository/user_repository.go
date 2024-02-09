@@ -5,6 +5,9 @@ import (
 	"github.com/errorsolver/Todo-Golang/api/model"
 )
 
+type DB struct {
+}
+
 func GetAllUsers() ([]model.User, error) {
 	var users []model.User
 	err := database.DB.Find(&users).Error
