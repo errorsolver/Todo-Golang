@@ -12,7 +12,7 @@ func CreateJWTCookie(c *gin.Context, token string) string {
 		token,                    // value string
 		0,                        // maxAge int
 		"/",                      // path string
-		"localhost",              // domain string
+		os.Getenv("DOMAIN"),      // "localhost"    // domain string
 		false,                    // secure bool
 		false,                    // httpOnly bool
 	)
@@ -25,7 +25,7 @@ func DeleteJWTCookie(c *gin.Context) {
 		"",                       // value string
 		-1,                       // maxAge int
 		"/",                      // path string
-		"localhost",              // domain string
+		os.Getenv("DOMAIN"),      // domain string
 		false,                    // secure bool
 		false,                    // httpOnly bool
 	)
