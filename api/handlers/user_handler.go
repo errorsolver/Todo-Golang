@@ -43,10 +43,19 @@ func GetUserByID(c *gin.Context) {
 	}
 
 	user, err := services.GetUserByID(userId)
+	var errCode int
 	if err != nil {
+		if err.Error() == "record not found" {
+			c.AbortWithStatusJSON(http.StatusNotFound, gin.H{
+				"success": false,
+				"code":    http.StatusNotFound,
+				"error":   err.Error(),
+			})
+			return
+		}
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
 			"success": false,
-			"code":    http.StatusBadRequest,
+			"code":    errCode | http.StatusBadRequest,
 			"error":   err.Error(),
 		})
 		return
@@ -127,6 +136,14 @@ func UpdateUser(c *gin.Context) {
 	user.ID = userID
 
 	if err := services.UpdateUser(user); err != nil {
+		if err.Error() == "record not found" {
+			c.AbortWithStatusJSON(http.StatusNotFound, gin.H{
+				"success": false,
+				"code":    http.StatusNotFound,
+				"error":   err.Error(),
+			})
+			return
+		}
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
 			"success": false,
 			"code":    http.StatusBadRequest,

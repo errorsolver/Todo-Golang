@@ -34,6 +34,14 @@ func GetTodoByUserID(c *gin.Context) {
 
 	userID, err := getUserID(c)
 	if err != nil {
+		if err.Error() == "record not found" {
+			c.AbortWithStatusJSON(http.StatusNotFound, gin.H{
+				"success": false,
+				"code":    http.StatusNotFound,
+				"error":   err.Error(),
+			})
+			return
+		}
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
 			"success": false,
 			"code":    http.StatusBadRequest,
@@ -140,6 +148,14 @@ func UpdateTodo(c *gin.Context) {
 	todo.UserID = userID
 
 	if err := services.UpdateTodo(todo); err != nil {
+		if err.Error() == "record not found" {
+			c.AbortWithStatusJSON(http.StatusNotFound, gin.H{
+				"success": false,
+				"code":    http.StatusNotFound,
+				"error":   err.Error(),
+			})
+			return
+		}
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
 			"success": false,
 			"code":    http.StatusBadRequest,
@@ -183,6 +199,14 @@ func DeleteTodo(c *gin.Context) {
 	todo.UserID = userID
 
 	if err := services.DeleteTodo(todo); err != nil {
+		if err.Error() == "record not found" {
+			c.AbortWithStatusJSON(http.StatusNotFound, gin.H{
+				"success": false,
+				"code":    http.StatusNotFound,
+				"error":   err.Error(),
+			})
+			return
+		}
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
 			"success": false,
 			"code":    http.StatusBadRequest,
