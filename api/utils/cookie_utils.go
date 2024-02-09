@@ -14,10 +14,11 @@ func CreateJWTCookie(c *gin.Context, token string) string {
 		"/",                      // path string
 		"localhost",              // domain string
 		false,                    // secure bool
-		true,                     // httpOnly bool
+		false,                    // httpOnly bool
 	)
 	return token
 }
+
 func DeleteJWTCookie(c *gin.Context) {
 	c.SetCookie(
 		os.Getenv("COOKIETITLE"), // name string
@@ -26,6 +27,6 @@ func DeleteJWTCookie(c *gin.Context) {
 		"/",                      // path string
 		"localhost",              // domain string
 		false,                    // secure bool
-		true,                     // httpOnly bool
+		false,                    // httpOnly bool
 	)
 }
