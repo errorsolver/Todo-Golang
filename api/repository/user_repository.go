@@ -22,9 +22,20 @@ func GetUserByID(id int) (model.User, error) {
 	}
 	return user, nil
 }
+
+// Deprecated
 func GetUserByNamePass(loginData model.User) (model.User, error) {
 	var user model.User
 	result := database.DB.First(&user, "name = ? AND password = ?", loginData.Name, loginData.Password)
+	if result.Error != nil {
+		return model.User{}, result.Error
+	}
+	return user, nil
+}
+
+func GetUserByName(name string) (model.User, error) {
+	var user model.User
+	result := database.DB.First(&user, "name = ?", name)
 	if result.Error != nil {
 		return model.User{}, result.Error
 	}
@@ -52,4 +63,12 @@ func DeleteUser(id uint) error {
 		return err
 	}
 	return nil
+}
+
+func GetUserPass(name string) (string, error) {
+	var user model.User
+	if err := database.DB.First(&user, "name = ?", name).Error; err != nil {
+		return "", err
+	}
+	return user.Password, nil
 }

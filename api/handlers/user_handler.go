@@ -88,6 +88,17 @@ func CreateUser(c *gin.Context) {
 		return
 	}
 
+	var err error
+	user.Password, err = utils.HashPassword(user.Password)
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
+			"success": false,
+			"code":    http.StatusBadRequest,
+			"error":   err.Error(),
+		})
+		return
+	}
+
 	if err := services.CreateUser(user); err != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
 			"success": false,
@@ -205,15 +216,31 @@ func Login(c *gin.Context) {
 		})
 		return
 	}
-
-	token, err := services.GetUserByNamePass(user)
+	hashPass, err := services.GetUserPass(user.Name)
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
 			"success": false,
 			"code":    http.StatusBadRequest,
 			"error":   err.Error(),
 		})
+		return
+	}
+	if ok := utils.CheckPasswordHash(user.Password, hashPass); !ok {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
+			"success": false,
+			"code":    http.StatusBadRequest,
+			"error":   "user or password not correct",
+		})
+		return
+	}
 
+	token, err := services.GetUserByName(user)
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
+			"success": false,
+			"code":    http.StatusBadRequest,
+			"error":   err.Error(),
+		})
 		return
 	}
 
